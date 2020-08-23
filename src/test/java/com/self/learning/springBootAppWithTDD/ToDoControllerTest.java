@@ -1,16 +1,13 @@
-import com.self.learning.springBootAppWithTDD.SpringBootAppWithTddApplication;
-import com.self.learning.springBootAppWithTDD.controller.ToDoController;
+package com.self.learning.springBootAppWithTDD;
+
 import com.self.learning.springBootAppWithTDD.entity.ToDo;
 import com.self.learning.springBootAppWithTDD.service.ToDoService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,9 +20,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = SpringBootAppWithTddApplication.class)
-@WebMvcTest(ToDoController.class)
+
+@WebMvcTest
 public class ToDoControllerTest {
 
     @Autowired
