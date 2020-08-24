@@ -15,12 +15,17 @@ public class ToDo {
     @GeneratedValue
     private long id;
     private String text;
-    private boolean isCompleted;
+    private boolean completed;
 
-    public ToDo(long id, String text, boolean isCompleted) {
+    public ToDo(long id, String text, boolean completed) {
         this.id = id;
         this.text = text;
-        this.isCompleted = isCompleted;
+        this.completed = completed;
+    }
+
+    public ToDo(String text, boolean completed) {
+        this.text = text;
+        this.completed = completed;
     }
 
 }
