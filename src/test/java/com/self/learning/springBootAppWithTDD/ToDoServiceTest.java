@@ -3,9 +3,13 @@ package com.self.learning.springBootAppWithTDD;
 import com.self.learning.springBootAppWithTDD.entity.ToDo;
 import com.self.learning.springBootAppWithTDD.repository.ToDoRepository;
 import com.self.learning.springBootAppWithTDD.service.ToDoService;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,14 +20,31 @@ public class ToDoServiceTest {
     @Autowired
     private ToDoRepository toDoRepository;
 
+    @AfterEach
+    void tearDown(){
+        toDoRepository.deleteAll();
+    }
     @Test
     void getAllToDos(){
-        ToDo toDoSample = new ToDo(1L,"Todo Sample 1",true);
-        toDoRepository.save(toDoSample);
+        ToDo todoSample = new ToDo(1L,"Todo Sample 1",true);
+        toDoRepository.save(todoSample);
         ToDoService toDoService = new ToDoService(toDoRepository);
 
-        ToDo firstToDo = toDoService.findAll().get(0);
-        assertEquals(toDoSample.getText(),firstToDo.getText());
-        assertTrue(firstToDo.isCompleted());
+        List<ToDo> toDoList = toDoService.findAll();
+        ToDo lastToDo = toDoList.get(toDoList.size()-1);
+
+        assertEquals(todoSample.getText(), lastToDo.getText());
+        assertEquals(todoSample.isCompleted(), lastToDo.isCompleted());
+        assertEquals(todoSample.getId(), lastToDo.getId());
+    }
+
+    @Test
+    void saveToDo(){
+        ToDoService toDoService = new ToDoService(toDoRepository);
+        ToDo toDoSample = new ToDo(1L,"Todo Sample 1",true);
+
+        toDoService.save(toDoSample);
+
+        assertEquals(1,toDoRepository.count());
     }
 }
