@@ -26,4 +26,6 @@ public class ToDoService {
     public ToDo save(ToDo toDo) {
         return toDoRepository.save(toDo);
     }
+    
+    public void deleteAll(List<ToDo> listOfTodos){toDoRepository.deleteAll(listOfTodos);}
 }

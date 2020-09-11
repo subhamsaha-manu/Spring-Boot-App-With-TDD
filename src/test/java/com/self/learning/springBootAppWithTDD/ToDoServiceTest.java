@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,5 +47,24 @@ public class ToDoServiceTest {
         toDoService.save(toDoSample);
 
         assertEquals(1,toDoRepository.count());
+    }
+
+    @Test
+    void deleteTodos(){
+        ToDoService toDoService = new ToDoService(toDoRepository);
+        ToDo toDoSample = new ToDo(1L,"Todo Sample 1",true);
+        ToDo toDoSample2 = new ToDo(2L,"Todo Sample 2",false);
+
+        toDoService.save(toDoSample);
+        toDoService.save(toDoSample2);
+        toDoSample2.setText("Sample 3");
+        toDoSample2.setCompleted(true);
+        toDoService.save(toDoSample2);
+        List<ToDo> toDoList = new ArrayList<>();
+        toDoList.add(toDoSample);
+        toDoService.deleteAll(toDoList);
+
+        assertEquals(1,toDoRepository.count());
+        assertEquals("Sample 3",toDoRepository.findById(2L).get().getText());
     }
 }
